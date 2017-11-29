@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:csv="http://www.ibm.com/dfdl/CommaSeparatedFormat" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+
+    <xsd:import namespace="http://www.ibm.com/dfdl/CommaSeparatedFormat" schemaLocation="IBMdefined/CommaSeparatedFormat.xsd"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format documentFinalTerminatorCanBeMissing="yes" encoding="{$dfdl:encoding}" escapeSchemeRef="csv:CSVEscapeScheme" ref="csv:CommaSeparatedFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+
+	<xsd:element dfdl:encoding="UTF-8" dfdl:terminator="" ibmSchExtn:docRoot="true" name="ReprocessFile">
+		<xsd:complexType>
+			<xsd:sequence dfdl:encoding="UTF-8" dfdl:separator="" dfdl:terminator="">
+				<xsd:element dfdl:encoding="UTF-8" dfdl:terminator="" name="record">
+					<xsd:complexType>
+                        											<xsd:sequence dfdl:encoding="UTF-8" dfdl:separator="">
+                            														                            						                        <xsd:element default="" dfdl:encoding="ISO-8859-1" dfdl:terminator="%#xA6;" ibmDfdlExtn:sampleValue="value1" name="Header" type="xsd:string"/>
+                                                                                                            <xsd:element default="" dfdl:encoding="ISO-8859-1" dfdl:initiator="" dfdl:terminator="%#xA6;" ibmDfdlExtn:sampleValue="value2" maxOccurs="unbounded" name="Detail" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+				</xsd:element>				
+                			                                                    </xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+</xsd:schema>

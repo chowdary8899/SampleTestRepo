@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:com_gpscsp_Initialproc_GPS_TransSetWS_SF.subflow="com/gpscsp/Initialproc/GPS_TransSetWS_SF.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF.subflow"
+    nsPrefix="com_gpscsp_Initialproc_GPS_ExtractTransSetID_SF.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Username" name="Username" defaultValueLiteral="signFiles">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.Password" name="Password" defaultValueLiteral="eemsws123">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.dataSource" name="dataSource" defaultValueLiteral="E3CSP_DB">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.TSWebURL" name="TSWebURL" defaultValueLiteral="http://apsrt2957.uhc.com:9087/GatewayPreprocCSPWeb/ws/createtranssetid">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.TSWebURL.internal_npcompiler" name="TSWebURL.internal_npcompiler">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="GPS_ExtractTransSetID_SF" bundleName="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/GPSCSP_InitialProcessing_APP/icons/full/obj16/GPS_ExtractTransSetID_SF.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/GPSCSP_InitialProcessing_APP/icons/full/obj30/GPS_ExtractTransSetID_SF.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="9,164">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="675,162">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="110,164" dataSource="E3CSP_DB" computeExpression="esql://routine/com.gpscsp.Initialproc#GPS_CreateTransSetReq_Compute.Main">
+        <translation xmi:type="utility:ConstantString" string="GPS_CreateTransSetReq"/>
+        <shortDescription xmi:type="utility:ConstantString" string=" stores the Submitter-MemberCnt and  creates a Submitter IDs request to fetch the TransSetIds."/>
+        <longDescription xmi:type="utility:ConstantString" string="1.&#x9;This node stores the Submitter-MemberCnt from IIB Input Message into Environment Variables in the following structure.&#xD;&#xA;2.&#x9;It also makes creates a Submitter IDs request to fetch the TransSetIds."/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_3" location="454,161" dataSource="E3CSP_DB" computeExpression="esql://routine/com.gpscsp.Initialproc#GPS_ValidateTransSetResp_Compute.Main" computeMode="all">
+        <translation xmi:type="utility:ConstantString" string="GPS_ValidateTransSetResp"/>
+        <shortDescription xmi:type="utility:ConstantString" string="This node validates the response from the WebService and stores the TransSetIds against each Submitter in Environment Variables"/>
+        <longDescription xmi:type="utility:ConstantString" string="This node validates the response from the WebService and stores the TransSetIds against each Submitter in Environment Variables.If the suibmitter fails to generate the transsetid then the entire file needs to be marked as failed and entry to be made to the global cache to mark the failure status as Y."/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output1" location="562,301">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Fault" bundleName="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+      </nodes>
+      <nodes xmi:type="com_gpscsp_Initialproc_GPS_TransSetWS_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_2" location="283,67" TSWebURL.internal_npcompiler="com.ibm.etools.mft.ibmnodes.compilers.GenericSOAPCompiler">
+        <translation xmi:type="utility:ConstantString" string="GPS_TransSetWS_SF"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="OutTerminal.Output1" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.Output1" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.Username">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.Username" bundleName="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+        <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.Password">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.Password" bundleName="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+          <propertyDescriptor groupName="Group.Basic" configurable="true" describedAttribute="Property.dataSource">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.dataSource" bundleName="ComIbmCompute" pluginId="com.ibm.etools.mft.ibmnodes"/>
+            <propertyDescriptor groupName="Group.Basic" propertyEditor="com.ibm.etools.mft.ibmnodes.editors.soap.http.SOAP_Over_HTTP_WebServicesURLPropertyEditor" compiler="com.ibm.etools.mft.ibmnodes.compilers.GenericSOAPCompiler" configurable="true" describedAttribute="Property.TSWebURL">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.TSWebURL" bundleName="GPSCSP_TransSetWS_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+              <propertyDescriptor groupName="Group.InternalRuntimeGroup" readOnly="true" hidden="true" userDefined="true" describedAttribute="Property.TSWebURL.internal_npcompiler">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.TSWebURL.internal_npcompiler" bundleName="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF" pluginId="GPSCSP_InitialProcessing_APP"/>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.dataSource" overriddenNodes="FCMComposite_1_1 FCMComposite_1_3">
+      <overriddenAttribute href="ComIbmCompute.msgnode#Property.dataSource"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.TSWebURL" overriddenNodes="FCMComposite_1_2">
+      <overriddenAttribute href="com/gpscsp/Initialproc/GPS_TransSetWS_SF.subflow#Property.TSWebURL"/>
+    </attributeLinks>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

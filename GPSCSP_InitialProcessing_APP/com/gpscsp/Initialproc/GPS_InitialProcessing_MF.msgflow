@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmCompute.msgnode="ComIbmCompute.msgnode" xmlns:ComIbmFileInput.msgnode="ComIbmFileInput.msgnode" xmlns:ComIbmFileRead.msgnode="ComIbmFileRead.msgnode" xmlns:ComIbmLabel.msgnode="ComIbmLabel.msgnode" xmlns:ComIbmMQOutput.msgnode="ComIbmMQOutput.msgnode" xmlns:com_gpscsp_Initialproc_GPSCSP_SP_Getprofile_load_SF.subflow="com/gpscsp/Initialproc/GPSCSP_SP_Getprofile_load_SF.subflow" xmlns:com_gpscsp_Initialproc_GPS_ExtractTransSetID_SF.subflow="com/gpscsp/Initialproc/GPS_ExtractTransSetID_SF.subflow"
+    xmlns:com_gpscsp_Initialproc_ProfileCheck.subflow="com/gpscsp/Initialproc/ProfileCheck.subflow" xmlns:com_src_common_Common_AuditInMessage_SF.subflow="com/src/common/Common_AuditInMessage_SF.subflow" xmlns:com_src_common_Common_ExceptionHandling_SF.subflow="com/src/common/Common_ExceptionHandling_SF.subflow" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="com/gpscsp/Initialproc/GPS_InitialProcessing_MF.msgflow"
+    nsPrefix="com_gpscsp_Initialproc_GPS_InitialProcessing_MF.msgflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_udpinitProcSubmtCnt" name="CH_udpinitProcSubmtCnt" lowerBound="1" defaultValueLiteral="/iib/scripts/CSP/initProc_SubmtCnt_GPSCSP.sh">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_udpinitProcSplit" name="CH_udpinitProcSplit" lowerBound="1" defaultValueLiteral="/iib/scripts/CSP/initProc_SplitFile_GPSCSP.sh">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_FileCntDir" name="CH_FileCntDir" lowerBound="1" defaultValueLiteral="/iib/scripts/CSP/InitialProcessing/TempDir">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_GlobalCacheMap" name="CH_GlobalCacheMap" lowerBound="1" defaultValueLiteral="GPSCSP_Common_Map">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_OuputNormalSIDEEIDLocation" name="CH_OuputNormalSIDEEIDLocation" lowerBound="1" defaultValueLiteral="/eems/iib/CSP/initialprocess/eeid">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_InputFileLocation" name="CH_InputFileLocation" lowerBound="1" defaultValueLiteral="/eems/iib/CSP/initialprocess/input">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.BrkConfigKey" name="BrkConfigKey" lowerBound="1" defaultValueLiteral="BRK_CONFIG">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.SchemaName" name="SchemaName" lowerBound="1" defaultValueLiteral="ELECELIG">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_Inbound_Map" name="CH_Inbound_Map" lowerBound="1" defaultValueLiteral="GPSCSP_Inbound_Map">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_brkrList" name="CH_brkrList" lowerBound="1" defaultValueLiteral="BKMBS11">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_brkrCount" name="CH_brkrCount" lowerBound="1" defaultValueLiteral="1">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.DestinationSystem" name="DestinationSystem" lowerBound="1" defaultValueLiteral="CSP">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.GPSCSP_Source_Map" name="GPSCSP_Source_Map" lowerBound="1" defaultValueLiteral="GPSCSP_Source_Map">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.inputDirectory" name="inputDirectory" lowerBound="1" defaultValueLiteral="/eems/iib/CSP/initialprocess/input">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.AuditQName" name="AuditQName" defaultValueLiteral="EEMSIIB.GPSCSP_COMMON_AUDITMESSAGE_DATA">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.BECode" name="BECode" lowerBound="1" defaultValueLiteral="700">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.ProjNumber" name="ProjNumber" lowerBound="1" defaultValueLiteral="2">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_udpinitProcSubmtCnt_Mcd" name="CH_udpinitProcSubmtCnt_Mcd" lowerBound="1" defaultValueLiteral="/iib/scripts/CSP/initProc_SubmtCnt_GPSCSP_Medcd.sh">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.CH_udpinitProcSplit_Mcd" name="CH_udpinitProcSplit_Mcd" lowerBound="1" defaultValueLiteral="/iib/scripts/CSP/initProc_SplitFile_GPSCSP_Medcd.sh">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.timeoutInSeconds" name="timeoutInSeconds" lowerBound="1" defaultValueLiteral="1800">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="GPS_InitialProcessing_MF" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/GPSCSP_InitialProcessing_APP/icons/full/obj16/GPS_InitialProcessing_MF.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/GPSCSP_InitialProcessing_APP/icons/full/obj30/GPS_InitialProcessing_MF.gif"/>
+    <composition>
+      <nodes xmi:type="ComIbmFileInput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="-63,253" filenamePattern="*.trig" messageDomainProperty="BLOB" waitInterval="30" retryMechanism="shortRetry" retryThreshold="3" shortRetryInterval="30" componentLevel="node" additionalInstances="5">
+        <translation xmi:type="utility:ConstantString" string="GPS_ReadTrigFile"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="60,182" dataSource="E3CSP_DB" transaction="commit" computeExpression="esql://routine/com.gpscsp.Initialproc#GPS_FormatValidation_Compute.Main" computeMode="destinationAndMessage" throwExceptionOnDatabaseError="false">
+        <translation xmi:type="utility:ConstantString" string="GPS Format Validation"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_6" location="576,204" dataSource="E3CSP_DB" computeExpression="esql://routine/com.gpscsp.Initialproc#InvokeScript_UpdateGlobalCache_Compute.Main">
+        <translation xmi:type="utility:ConstantString" string="InvokeScript_UpdateGlobalCache"/>
+      </nodes>
+      <nodes xmi:type="com_gpscsp_Initialproc_ProfileCheck.subflow:FCMComposite_1" xmi:id="FCMComposite_1_3" location="134,233" rotation="TOP_TO_BOTTOM" webServiceURL.internal_npcompiler="com.ibm.etools.mft.ibmnodes.compilers.GenericSOAPCompiler">
+        <translation xmi:type="utility:ConstantString" string="ProfileCheck"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_7" location="263,188" dataSource="E3CSP_DB" computeExpression="esql://routine/com.gpscsp.Initialproc#GPS_InvokeSubmitCntScript.Main" computeMode="destinationAndMessage">
+        <translation xmi:type="utility:ConstantString" string="GPS_InvokeSubmitCntScript"/>
+      </nodes>
+      <nodes xmi:type="com_gpscsp_Initialproc_GPS_ExtractTransSetID_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_4" location="481,181" TSWebURL.internal_npcompiler="com.ibm.etools.mft.ibmnodes.compilers.GenericSOAPCompiler">
+        <translation xmi:type="utility:ConstantString" string="GPS_ExtractTransSetID_SF"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFileRead.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_9" location="416,255" fileDispositionAction="delete" messageDomainProperty="DFDL" messageTypeProperty="{}:InitilaCntSubCnt_Mset">
+        <translation xmi:type="utility:ConstantString" string="File Read"/>
+      </nodes>
+      <nodes xmi:type="com_src_common_Common_ExceptionHandling_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_11" location="164,420" BECode="700" ProjNumber="2">
+        <translation xmi:type="utility:ConstantString" string="Common_ExceptionHandling_SF"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_12" location="517,320" dataSource="E3CSP_DB" computeExpression="esql://routine/com.gpscsp.Initialproc#GPSCSP_ThrowUserException_Compute.Main">
+        <translation xmi:type="utility:ConstantString" string="GPSCSP_ThrowUserException_Compute"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_13" location="25,349" dataSource="E3CSP_DB" computeExpression="esql://routine/com.gpscsp.Initialproc#GPSCSP_InitialProcessing_CatchException.Main" computeMode="exceptionAndMessage">
+        <translation xmi:type="utility:ConstantString" string="GPS_InitialProcessing_CatchException"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_14" location="282,356" queueName="EEMSIIB.GPSCSP_ERRORMESSAGE_DATA" transactionMode="no">
+        <translation xmi:type="utility:ConstantString" string="EEMSIIB.GPSCSP_ERRORMESSAGE_DATA"/>
+      </nodes>
+      <nodes xmi:type="ComIbmLabel.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_18" location="422,443" labelName="AUDIT">
+        <translation xmi:type="utility:ConstantString" string="AUDIT"/>
+        <shortDescription xmi:type="utility:ConstantString" string="this node will get call whenever audi it required"/>
+        <longDescription xmi:type="utility:ConstantString" string="this node will get call whenever audi it required"/>
+      </nodes>
+      <nodes xmi:type="com_src_common_Common_AuditInMessage_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_19" location="466,439">
+        <translation xmi:type="utility:ConstantString" string="Common_AuditInMessage_SF"/>
+        <shortDescription xmi:type="utility:ConstantString" string="Auditsubflow for writing the log files at different level of messageflow"/>
+        <longDescription xmi:type="utility:ConstantString" string="Auditsubflow for writing the log files at different level of messageflow"/>
+      </nodes>
+      <nodes xmi:type="ComIbmFileRead.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_5" location="186,127" fileDispositionAction="delete" messageDomainProperty="DFDL" messageTypeProperty="{}:ReprocessFile" recordDetection="parsedRecordSequence">
+        <translation xmi:type="utility:ConstantString" string="ReadingReprFile"/>
+      </nodes>
+      <nodes xmi:type="ComIbmCompute.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_8" location="300,98" dataSource="E3CSP_DB" computeExpression="esql://routine/com.gpscsp.Initialproc#GPS_InitialProcessing_MF_CreateSourceXML.Main" computeMode="exceptionAndMessage">
+        <translation xmi:type="utility:ConstantString" string="GPS_CreateSourceXML"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_10" location="531,48" queueName="EEMSIIB.GPSCSP_SOURCE_CSP_IN" transactionMode="no">
+        <translation xmi:type="utility:ConstantString" string="SourceInquiry_IN"/>
+      </nodes>
+      <nodes xmi:type="ComIbmMQOutput.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_15" location="754,182" queueName="EEMSIIB.GPSCSP_TBA_INVOKE_IN" transactionMode="no">
+        <translation xmi:type="utility:ConstantString" string="EEMSIIB.GPSCSP_TBA_INVOKE_IN"/>
+      </nodes>
+      <nodes xmi:type="com_gpscsp_Initialproc_GPSCSP_SP_Getprofile_load_SF.subflow:FCMComposite_1" xmi:id="FCMComposite_1_16" location="775,315" webServiceURL.internal_npcompiler="com.ibm.etools.mft.ibmnodes.compilers.GenericSOAPCompiler">
+        <translation xmi:type="utility:ConstantString" string="GPSCSP_SP_Getprofile_load_SF"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_1" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="FCMComposite_1_6" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="FCMComposite_1_9" sourceNode="FCMComposite_1_7" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_11" targetNode="FCMComposite_1_4" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_9" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_10" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_9" sourceTerminalName="OutTerminal.noMatch" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_12" targetNode="FCMComposite_1_12" sourceNode="FCMComposite_1_4" sourceTerminalName="OutTerminal.Output1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_16" targetNode="FCMComposite_1_11" sourceNode="FCMComposite_1_13" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_17" targetNode="FCMComposite_1_14" sourceNode="FCMComposite_1_11" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_18" targetNode="FCMComposite_1_19" sourceNode="FCMComposite_1_18" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_19" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_20" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.catch" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_21" targetNode="FCMComposite_1_13" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.Output1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_8" targetNode="FCMComposite_1_7" sourceNode="FCMComposite_1_3" sourceTerminalName="OutTerminal.Output" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_5" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="FCMComposite_1_8" sourceNode="FCMComposite_1_5" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_13" targetNode="FCMComposite_1_10" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_15" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_14" targetNode="FCMComposite_1_16" sourceNode="FCMComposite_1_6" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.Input"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_15" targetNode="FCMComposite_1_15" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out1" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_22" targetNode="FCMComposite_1_16" sourceNode="FCMComposite_1_8" sourceTerminalName="OutTerminal.out2" targetTerminalName="InTerminal.Input"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_udpinitProcSubmtCnt">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.CH_udpinitProcSubmtCnt" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+        <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_udpinitProcSplit">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.CH_udpinitProcSplit" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+          <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_FileCntDir">
+            <propertyName xmi:type="utility:TranslatableString" key="Property.CH_FileCntDir" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+            <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_GlobalCacheMap">
+              <propertyName xmi:type="utility:TranslatableString" key="Property.CH_GlobalCacheMap" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+              <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_OuputNormalSIDEEIDLocation">
+                <propertyName xmi:type="utility:TranslatableString" key="Property.CH_OuputNormalSIDEEIDLocation" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_InputFileLocation">
+                  <propertyName xmi:type="utility:TranslatableString" key="Property.CH_InputFileLocation" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                  <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.BrkConfigKey">
+                    <propertyName xmi:type="utility:TranslatableString" key="Property.BrkConfigKey" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                    <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.SchemaName">
+                      <propertyName xmi:type="utility:TranslatableString" key="Property.SchemaName" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                      <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_Inbound_Map">
+                        <propertyName xmi:type="utility:TranslatableString" key="Property.CH_Inbound_Map" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                        <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_brkrList">
+                          <propertyName xmi:type="utility:TranslatableString" key="Property.CH_brkrList" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                          <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_brkrCount">
+                            <propertyName xmi:type="utility:TranslatableString" key="Property.CH_brkrCount" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                            <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.DestinationSystem">
+                              <propertyName xmi:type="utility:TranslatableString" key="Property.DestinationSystem" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                              <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.GPSCSP_Source_Map">
+                                <propertyName xmi:type="utility:TranslatableString" key="Property.GPSCSP_Source_Map" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                                <propertyDescriptor groupName="Group.Configuration" propertyEditor="com.ibm.etools.mft.ibmnodes.editors.file.FileInputNodeDirPropertyEditor" configurable="true" describedAttribute="Property.inputDirectory">
+                                  <propertyName xmi:type="utility:TranslatableString" key="Property.inputDirectory" bundleName="ComIbmFileInput" pluginId="com.ibm.etools.mft.ibmnodes"/>
+                                  <propertyDescriptor groupName="Group.Basic" propertyEditor="com.ibm.etools.mft.ibmnodes.editors.mq.MQQueueNameEditor" configurable="true" describedAttribute="Property.AuditQName">
+                                    <propertyName xmi:type="utility:TranslatableString" key="Property.AuditQName" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                                    <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.BECode">
+                                      <propertyName xmi:type="utility:TranslatableString" key="Property.BECode" bundleName="com/src/common/Common_ExceptionHandling_SF" pluginId="Common_Framework_LIB"/>
+                                      <propertyDescriptor groupName="Group.Basic" configurable="true" userDefined="true" describedAttribute="Property.ProjNumber">
+                                        <propertyName xmi:type="utility:TranslatableString" key="Property.ProjNumber" bundleName="com/src/common/Common_ExceptionHandling_SF" pluginId="Common_Framework_LIB"/>
+                                        <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_udpinitProcSubmtCnt_Mcd">
+                                          <propertyName xmi:type="utility:TranslatableString" key="Property.CH_udpinitProcSubmtCnt_Mcd" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                                          <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.CH_udpinitProcSplit_Mcd">
+                                            <propertyName xmi:type="utility:TranslatableString" key="Property.CH_udpinitProcSplit_Mcd" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                                            <propertyDescriptor groupName="Group.Configuration" configurable="true" userDefined="true" describedAttribute="Property.timeoutInSeconds">
+                                              <propertyName xmi:type="utility:TranslatableString" key="Property.timeoutInSeconds" bundleName="com/gpscsp/Initialproc/GPS_InitialProcessing_MF" pluginId="GPSCSP_InitialProcessing_APP"/>
+                                            </propertyDescriptor>
+                                          </propertyDescriptor>
+                                        </propertyDescriptor>
+                                      </propertyDescriptor>
+                                    </propertyDescriptor>
+                                  </propertyDescriptor>
+                                </propertyDescriptor>
+                              </propertyDescriptor>
+                            </propertyDescriptor>
+                          </propertyDescriptor>
+                        </propertyDescriptor>
+                      </propertyDescriptor>
+                    </propertyDescriptor>
+                  </propertyDescriptor>
+                </propertyDescriptor>
+              </propertyDescriptor>
+            </propertyDescriptor>
+          </propertyDescriptor>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.inputDirectory" overriddenNodes="FCMComposite_1_1">
+      <overriddenAttribute href="ComIbmFileInput.msgnode#Property.inputDirectory"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.AuditQName" overriddenNodes="FCMComposite_1_19">
+      <overriddenAttribute href="com/src/common/Common_AuditInMessage_SF.subflow#Property.queueName"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.BECode" overriddenNodes="FCMComposite_1_11">
+      <overriddenAttribute href="com/src/common/Common_ExceptionHandling_SF.subflow#Property.BECode"/>
+    </attributeLinks>
+    <attributeLinks promotedAttribute="Property.ProjNumber" overriddenNodes="FCMComposite_1_11">
+      <overriddenAttribute href="com/src/common/Common_ExceptionHandling_SF.subflow#Property.ProjNumber"/>
+    </attributeLinks>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

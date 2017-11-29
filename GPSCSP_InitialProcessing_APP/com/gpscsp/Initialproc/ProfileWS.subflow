@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ComIbmSOAPExtract.msgnode="ComIbmSOAPExtract.msgnode" xmlns:ComIbmSOAPRequest.msgnode="ComIbmSOAPRequest.msgnode" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:eflow="http://www.ibm.com/wbi/2005/eflow" xmlns:utility="http://www.ibm.com/wbi/2005/eflow_utility" nsURI="com/gpscsp/Initialproc/ProfileWS.subflow"
+    nsPrefix="com_gpscsp_Initialproc_ProfileWS.subflow">
+  <eClassifiers xmi:type="eflow:FCMComposite" name="FCMComposite_1" useDefaults="true" udpSupport="true">
+    <eSuperTypes href="http://www.ibm.com/wbi/2005/eflow#//FCMBlock"/>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.webServiceURL" name="webServiceURL" defaultValueLiteral="http://apsrt2957.uhc.com:9087/GatewayPreprocCSPWeb/ws/submissioninfo">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xmi:type="ecore:EAttribute" xmi:id="Property.webServiceURL.internal_npcompiler" name="webServiceURL.internal_npcompiler">
+      <eType xmi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+    <translation xmi:type="utility:TranslatableString" key="ProfileWS" bundleName="com/gpscsp/Initialproc/ProfileWS" pluginId="GPSCSP_InitialProcessing_APP"/>
+    <colorGraphic16 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/GPSCSP_InitialProcessing_APP/icons/full/obj16/ProfileWS.gif"/>
+    <colorGraphic32 xmi:type="utility:GIFFileGraphic" resourceName="platform:/plugin/GPSCSP_InitialProcessing_APP/icons/full/obj30/ProfileWS.gif"/>
+    <composition>
+      <nodes xmi:type="eflow:FCMSource" xmi:id="InTerminal.Input" location="68,116">
+        <translation xmi:type="utility:TranslatableString" key="InTerminal.Input" bundleName="com/gpscsp/Initialproc/ProfileWS" pluginId="GPSCSP_InitialProcessing_APP"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output" location="418,133">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Output" bundleName="com/gpscsp/Initialproc/ProfileWS" pluginId="GPSCSP_InitialProcessing_APP"/>
+      </nodes>
+      <nodes xmi:type="ComIbmSOAPRequest.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_1" location="150,116" wsdlOperationMode="gateway" wsdlFileName="submissioninfo.wsdl" selectedPortType="getSubmissionInfo" selectedBinding="getSubmissionInfoSOAP" selectedOperation="getSubmissionInfo" selectedPort="getSubmissionInfoSOAP" targetNamespace="http://eems.gateway.uhc.com/submissioninfo/" useHTTPTransport="true" webServiceURL="http://apsp8066:9081/GatewayPreprocWeb/ws/submissioninfo" sslProtocol="TLS"
+          parserXmlnscBuildTreeUsingXMLSchema="false" validateMaster="none">
+        <translation xmi:type="utility:ConstantString" string="SOAP Request"/>
+      </nodes>
+      <nodes xmi:type="ComIbmSOAPExtract.msgnode:FCMComposite_1" xmi:id="FCMComposite_1_2" location="269,116">
+        <translation xmi:type="utility:ConstantString" string="SOAP Extract"/>
+      </nodes>
+      <nodes xmi:type="eflow:FCMSink" xmi:id="OutTerminal.Output1" location="416,44">
+        <translation xmi:type="utility:TranslatableString" key="OutTerminal.Fault" bundleName="com/gpscsp/Initialproc/ProfileWS" pluginId="GPSCSP_InitialProcessing_APP"/>
+      </nodes>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_2" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_3" targetNode="OutTerminal.Output" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_4" targetNode="OutTerminal.Output1" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_5" targetNode="OutTerminal.Output1" sourceNode="FCMComposite_1_1" sourceTerminalName="OutTerminal.fault" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_6" targetNode="OutTerminal.Output1" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.failure" targetTerminalName="InTerminal.in"/>
+      <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_7" targetNode="FCMComposite_1_1" sourceNode="InTerminal.Input" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
+    </composition>
+    <propertyOrganizer>
+      <propertyDescriptor groupName="Group.WebServiceURL" propertyEditor="com.ibm.etools.mft.ibmnodes.editors.soap.http.SOAP_Over_HTTP_WebServicesURLPropertyEditor" compiler="com.ibm.etools.mft.ibmnodes.compilers.GenericSOAPCompiler" configurable="true" describedAttribute="Property.webServiceURL">
+        <propertyName xmi:type="utility:TranslatableString" key="Property.webServiceURL" bundleName="ComIbmSOAPRequest" pluginId="com.ibm.etools.mft.ibmnodes"/>
+        <propertyDescriptor groupName="Group.InternalRuntimeGroup" readOnly="true" hidden="true" userDefined="true" describedAttribute="Property.webServiceURL.internal_npcompiler">
+          <propertyName xmi:type="utility:TranslatableString" key="Property.webServiceURL.internal_npcompiler" bundleName="com/gpscsp/Initialproc/ProfileWS" pluginId="GPSCSP_InitialProcessing_APP"/>
+        </propertyDescriptor>
+      </propertyDescriptor>
+    </propertyOrganizer>
+    <attributeLinks promotedAttribute="Property.webServiceURL" overriddenNodes="FCMComposite_1_1">
+      <overriddenAttribute href="ComIbmSOAPRequest.msgnode#Property.webServiceURL"/>
+    </attributeLinks>
+    <stickyBoard/>
+  </eClassifiers>
+</ecore:EPackage>

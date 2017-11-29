@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="submissioninfo" targetNamespace="http://eems.gateway.uhc.com/submissioninfo/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://eems.gateway.uhc.com/submissioninfo/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="submissioninfo_InlineSchema1.xsd"/>
+        <binding hasEncoding="false" imported="true" name="getSubmissionInfoSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    
+          <xsd:schema targetNamespace="http://eems.gateway.uhc.com/submissioninfo/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+<xsd:include schemaLocation="submissioninfo_InlineSchema1.xsd"/>
+    </xsd:schema>
+    </wsdl:types>
+  <wsdl:message name="submissionInfoRequest">
+    <wsdl:part element="tns:submissionInfoRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="submissionInfoResponse">
+    <wsdl:part element="tns:submissionInfoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="getSubmissionInfo">
+    <wsdl:operation name="getSubmissionInfo">
+      <wsdl:input message="tns:submissionInfoRequest"/>
+      <wsdl:output message="tns:submissionInfoResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="getSubmissionInfoSOAP" type="tns:getSubmissionInfo">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getSubmissionInfo">
+      <soap:operation soapAction="http://eems.gateway.uhc.com/submissioninfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="getSubmissionInfo">
+    <wsdl:port binding="tns:getSubmissionInfoSOAP" name="getSubmissionInfoSOAP">
+      <soap:address location="http://apsp8066:9081/GatewayPreprocWeb/ws/submissioninfo"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions name="transactionset" targetNamespace="http://eems.gateway.uhc.com/createtranssetid/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://eems.gateway.uhc.com/createtranssetid/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:documentation>
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedXSD location="transactionset_InlineSchema1.xsd"/>
+        <binding hasEncoding="false" imported="true" name="transactionsetSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    
+          <xsd:schema targetNamespace="http://eems.gateway.uhc.com/createtranssetid/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions">
+<xsd:include schemaLocation="transactionset_InlineSchema1.xsd"/>
+    </xsd:schema>
+    </wsdl:types>
+  <wsdl:message name="transactionsetRequest">
+    <wsdl:part element="tns:transactionsetRequest" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="transactionsetResponse">
+    <wsdl:part element="tns:transactionsetResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="processTransactionSet">
+    <wsdl:operation name="processTransactionSet">
+      <wsdl:input message="tns:transactionsetRequest"/>
+      <wsdl:output message="tns:transactionsetResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="transactionsetSOAP" type="tns:processTransactionSet">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="processTransactionSet">
+      <soap:operation soapAction="http://eems.gateway.uhc.com/createtranssetid"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="transactionset">
+    <wsdl:port binding="tns:transactionsetSOAP" name="transactionsetSOAP">
+      <soap:address location="http://apsp8066:9081/GatewayPreprocWeb/ws/createtranssetid"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

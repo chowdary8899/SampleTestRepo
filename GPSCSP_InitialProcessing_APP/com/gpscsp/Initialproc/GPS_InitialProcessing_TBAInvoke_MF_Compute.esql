@@ -1,0 +1,376 @@
+BROKER SCHEMA com.gpscsp.Initialproc
+PATH com.eems.globalcache, com.src.common;
+
+DECLARE GrpIdFileLocation EXTERNAL CHARACTER '';
+DECLARE SchemaName_TBA EXTERNAL CHARACTER 'ELECELIG' ;
+
+/* ----------------------------------------------------------
+* Subroutine Name : auditMessage(IN envVariables REFERENCE,
+                                 IN transactionLevel CHARACTER,
+					             IN auditMessage CHARACTER,
+					             IN payloadFlag CHARACTER)
+* Description :     Calling common framework audit procedure
+					to populate the pre-requisite audit information
+* Author Name : 	Debajit Paul
+* Date 		  : 	13 July, 2016
+-----------------------------------------------------------*/
+CREATE PROCEDURE auditLogCall_TBA(INOUT envVariables REFERENCE,IN logLevel CHARACTER, IN transactionLevel CHARACTER, IN payloadFlag CHARACTER,
+IN auditMessage CHARACTER) BEGIN
+	IF envVariables.Brk_LogSwitch = 'ON' THEN
+		CALL AuditLog(envVariables,logLevel,envVariables.Brk_LogLevel,transactionLevel, auditMessage ,
+		envVariables.BusProcId,payloadFlag) ;
+	END IF;
+END;
+
+CREATE COMPUTE MODULE GPS_InitialProcessing_TBAInvoke_MF_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		CREATE FIELD Environment.Variables;
+ 		DECLARE envVariables REFERENCE TO Environment.Variables;
+ 		DECLARE bProcFlStatus BOOLEAN FALSE ;
+ 		SET envVariables.Brk_LogLevel = InputRoot.XMLNSC.TBAInvoke.Brk_LogLevel ;
+ 		SET envVariables.Brk_LogSwitch = InputRoot.XMLNSC.TBAInvoke.Brk_LogSwitch;
+ 		SET envVariables.BusProcId = InputRoot.XMLNSC.TBAInvoke.BusProcId ;
+ 		SET envVariables.FileName  = InputRoot.XMLNSC.TBAInvoke.Cachexml.CachingLayout.InFileName; 
+ 		SET envVariables.CH_MasterSUBID = InputRoot.XMLNSC.TBAInvoke.Cachexml.CachingLayout.SubmitterId;
+ 		SET envVariables.TransFileId 	= InputRoot.XMLNSC.TBAInvoke.TransFileId;
+ 		SET envVariables.headFileDate 	= InputRoot.XMLNSC.TBAInvoke.headFileDate;
+ 		SET envVariables.CH_FileNMExt 	= InputRoot.XMLNSC.TBAInvoke.CH_FileNMExt;
+ 		-------------
+ 		/*IF (UCASE(envVariables.CH_FileNMExt) IN ('ECF'))THEN
+			DECLARE updQuery CHARACTER '' ;
+			SET updQuery = 'UPDATE ELECELIG.TRANS_FILE SET SBMT_FL_SND_DT = ' ||''''|| envVariables.headFileDate ||'''' ||' WHERE TRANS_FL_ID = ' || envVariables.TransFileId ;
+			SET envVariables.updStatus = PASSTHRU(updQuery) ;
+		END IF ;*/
+ 		-------------
+-- 		CALL ProcFlStsInsert(SchemaName_TBA,'INIT_PROC_TBA', 'START', envVariables.BusProcId, 'INITIALPROCESSING_TBAInvoke', 'IIB', '0','0', '',envVariables.FileName 
+--		, '', '', 0,envVariables.CH_MasterSUBID, '') INTO bProcFlStatus;
+		CALL ProcFlStsInsert(SchemaName_TBA,'INIT_PROC_TBA', 'START', envVariables.BusProcId, 'INITIALPROCESSING_TBAInvoke', 'IIB', InputRoot.XMLNSC.TBAInvoke.TransFileId,InputRoot.XMLNSC.TBAInvoke.TransSetId, '',envVariables.FileName
+		, '', '', 0,envVariables.CH_MasterSUBID, '') INTO bProcFlStatus;
+		
+		SET Environment.Variables.Inputmsg = InputRoot.XMLNSC;
+		SET Environment.Variables.Inputmsg.TBAInvoke.Cachexml = null;
+		SET OutputLocalEnvironment.Destination.File.Name = Environment.Variables.Inputmsg.TBAInvoke.eeidFileName;
+		SET OutputLocalEnvironment.Destination.File.Directory = GrpIdFileLocation;
+--		DECLARE envVariables REFERENCE TO Environment.Variables.Inputmsg.TBAInvoke;
+		CALL auditLogCall_TBA(envVariables, 'INFO','GPS_INITIAL_TBA_INVOKE:START', 'FALSE',
+						           'Start of Initial TBA_Invoke_call for the | TransSetId :  '
+						  || InputRoot.XMLNSC.TBAInvoke.TransSetId) ;			  
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE GPS_InitialProcessing_TBAInvoke_MF_Compute1
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		-- CALL CopyEntireMessage();
+		DECLARE envInMsg REFERENCE TO Environment.Variables  ;
+		DECLARE bProcFlStatus BOOLEAN FALSE ;
+--		DECLARE envInMsg REFERENCE TO Environment.Variables.Inputmsg.TBAInvoke;
+--		DECLARE envInMsg REFERENCE TO envVariables;
+			
+		SET OutputRoot.XMLNSC = NULL;
+		SET OutputRoot.XMLNSC.ProcessTBARequest.BasReq.(XMLNSC.Attribute)BusProcId = envInMsg.BusProcId;
+		SET OutputRoot.XMLNSC.ProcessTBARequest.BasReq.(XMLNSC.Attribute)transFileId = envInMsg.Inputmsg.TBAInvoke.TransFileId;
+		SET OutputRoot.XMLNSC.ProcessTBARequest.TransactionSetId.(XMLNSC.Attribute)transSetId = envInMsg.Inputmsg.TBAInvoke.TransSetId;
+		SET OutputRoot.XMLNSC.ProcessTBARequest.TransactionSetId.(XMLNSC.Attribute)ReprInd = 'N';
+		SET OutputRoot.XMLNSC.ProcessTBARequest.TransactionSetId.(XMLNSC.Attribute)headFileDate = envInMsg.headFileDate ;
+		DECLARE Tot_GrpIds INTEGER;
+		SET Tot_GrpIds = CARDINALITY(InputRoot.DFDL.ReadGrpId1.record[]);
+		IF Tot_GrpIds = 0 THEN
+		THROW USER EXCEPTION MESSAGE 0001 VALUES('SHould have one groupID atleast');	
+		END IF;
+		SET OutputRoot.XMLNSC.ProcessTBARequest.TransactionSetId.(XMLNSC.Attribute)TotalGrpCnt = Tot_GrpIds;
+		
+		DECLARE Rf_InGrpId REFERENCE TO InputRoot.DFDL.ReadGrpId1.record[1];
+		
+		WHILE LASTMOVE(Rf_InGrpId) DO
+			
+			SET OutputRoot.XMLNSC.ProcessTBARequest.TransactionSetId.(XMLNSC.Attribute)groupId = Rf_InGrpId.GrpId;
+			DECLARE Ch_Insert CHARACTER '';
+			SET Ch_Insert = com.src.common.CallTBA_Tracker('INSERT', envInMsg.Inputmsg.TBAInvoke.TransSetId,Rf_InGrpId.GrpId,'','CSPELIG');
+			PROPAGATE TO TERMINAL 'out' DELETE NONE;
+			SET OutputRoot.XMLNSC.ProcessTBARequest.TransactionSetId.(XMLNSC.Attribute)groupId = NULL;
+			MOVE Rf_InGrpId NEXTSIBLING REPEAT NAME ;
+		END WHILE;
+--		DECLARE envVariables REFERENCE TO envInMsg;
+		CALL auditLogCall_TBA(envInMsg, 'INFO','GPS_INITIAL_TBA_INVOKE:END', 'FALSE',
+						           'End of Initial TBA_Invoke_call for the | TransSetId :  '
+						  || envInMsg.Inputmsg.TBAInvoke.TransSetId) ;
+		CALL ProcFlStsInsert(SchemaName_TBA,'INIT_PROC_TBA', 'END', envInMsg.BusProcId, 'INITIALPROCESSING_TBAInvoke', 'IIB', envInMsg.Inputmsg.TBAInvoke.TransFileId, envInMsg.Inputmsg.TBAInvoke.TransSetId, '',envInMsg.FileName
+		, '', '', 0,envInMsg.CH_MasterSUBID, '') INTO bProcFlStatus;
+		RETURN FALSE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+
+---------exception handling
+
+
+CREATE COMPUTE MODULE GPSCSP_InitialProcessing_CatchException1
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		DECLARE bProcFlStatus BOOLEAN FALSE ;
+		DECLARE ExceptionMsg CHARACTER '' ;
+		
+		CALL CopyMessageHeaders() ;
+		SET OutputRoot.MQMD.Format = 'MQSTR' ;
+	    CALL CopyEntireMessage() ;
+	    IF NOT EXISTS(Environment.Variables[]) THEN
+			CREATE FIELD Environment.Variables ;
+			CREATE FIELD Environment.Variables.ExceptionData ;
+			DECLARE envVariables_ExcepData REFERENCE TO Environment.Variables.ExceptionData ;
+			 DECLARE envVariables REFERENCE TO Environment.Variables;
+			CALL loadLoglevelSwitch(envVariables, InputRoot.Properties.Encoding) ;
+			SET envVariables_ExcepData.BusProcId			= COALESCE(InputRoot.XMLNSC.TBAInvoke.BusProcId, '0') ;
+			SET envVariables_ExcepData.TransSetId			= COALESCE(InputRoot.XMLNSC.TBAInvoke.TransSetId, '0') ;
+			SET envVariables_ExcepData.TransFileId 			= COALESCE(InputRoot.XMLNSC.TBAInvoke.TransFileId, '0' ) ;
+			SET envVariables_ExcepData.InboundFilename  	= COALESCE(InputRoot.XMLNSC.TBAInvoke.eeidFileName, '0' ) ;
+		END IF;
+		DECLARE envVariables REFERENCE TO Environment.Variables ;
+		IF NOT EXISTS(envVariables.Brk_LogLevel[]) OR NOT EXISTS(envVariables.Brk_LogSwitch[]) THEN
+			SET envVariables.Brk_LogLevel = InputRoot.XMLNSC.TBAInvoke.Brk_LogLevel ;
+ 			SET envVariables.Brk_LogSwitch = InputRoot.XMLNSC.TBAInvoke.Brk_LogSwitch;
+		END IF;
+		
+		/* Start: Code to log Exception List in Logs */
+		IF EXISTS(InputExceptionList.*[]) THEN
+			CALL ExtractExceptionList(InputExceptionList, ExceptionMsg);
+		ELSEIF EXISTS(InputRoot.HTTPResponseHeader.*[] ) THEN
+			IF InputRoot.HTTPResponseHeader."X-Original-HTTP-Status-Code" = 500 THEN
+				SET ExceptionMsg = CAST(ASBITSTREAM(InputRoot.SOAP.Body ENCODING 273 CCSID 1208) AS CHARACTER CCSID 1208 ENCODING 273);
+			END IF ;
+		END IF;
+	   	CALL auditLogCall_TBA(envVariables, 'ERROR','GPS_INITIALPROC:END', 'FALSE',ExceptionMsg||'| TransSetId :  '
+		||COALESCE(envVariables.ExceptionData.TransSetId, 'NA')) ;
+		
+		/* End: Code to log Exception List in Logs */
+
+	    SET OutputExceptionList = InputExceptionList ;
+	    SET OutputLocalEnvironment = null ;
+	    PROPAGATE TO TERMINAL 'out' ;
+		CALL CopyMessageHeaders() ;
+		
+		CALL ProcFlStsInsert(SchemaName_TBA,'INIT_PROC_TBA', 'FAIL', envVariables.BusProcId, 'INITIALPROCESSING', 'IIB', '0','0', '',envVariables.FileName
+		, '', '', 0,envVariables.CH_MasterSUBID, '') INTO bProcFlStatus;
+		
+--	    CALL updateFailureStatus(envVariables) ; -- Check if this is required.
+	    
+    	RETURN FALSE;
+	END;
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]) ;
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I] ;
+			SET I = I + 1;
+		END WHILE;
+		IF NOT EXISTS(InputRoot.MQMD[]) THEN
+			SET OutputRoot.MQMD.Format = 'MQSTR' ;
+		END IF;
+	END;
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+	
+		
+	/*------------------------------------------------------------------------------
+	* 	Subroutine Name	: CreateEvironmentTree
+	*	Parameters		: In parameter -->InputExceptionList,Out parameter -->ExceptionMsg
+	*	Description		: Extract Diagnostic Information from the Exception List tree.
+	*	Author Name		: Bhanuchandar Palnati
+	*	Date			: 04th April, 2015 
+-------------------------------------------------------------------------------*/	
+	CREATE PROCEDURE ExtractExceptionList(IN InputExceptionList REFERENCE, OUT ExceptionMsg CHARACTER ) BEGIN
+		
+		DECLARE Diagnostics, DiagnosticInfo,LastTraceText, BIPMessage, DiagnosticText, ErrorType, ErrorCategory, ErrorSource, 
+		LastTracedLocation, LastTracedText , ErrorText, TracedName,TracedCatalog,TracedSeverity, TracedNumber,
+		LastTraceLocation, LastTracedName, LastTracedCatalog  CHARACTER '';
+		DECLARE LastTracedSeverity,LastTracedNumber, Width  INTEGER 0;
+		DECLARE EV REFERENCE TO Environment.Variables.ExceptionData;
+		SET Width = 1;
+		DECLARE Path REFERENCE TO InputExceptionList.*[Width];
+		SET ErrorCategory = FieldName(Path);
+		WHILE LastMove(Path) DO
+			WHILE FieldName(Path) IN ('FatalException','RecoverableException','ConfigurationException','SecurityException','ParserException',
+				'ConversionException','DatabaseException','UserException','CastException','MessageException','SqlException','SocketException',
+				'SocketTimeoutException','UnknownException') DO
+
+				IF NOT (FieldName(Path) = ErrorType) THEN
+					SET ErrorType = FieldName(Path);
+				END IF;
+				IF Length(Path.Name) > 0 THEN
+					IF NOT (LastTracedName= Path.Name) THEN
+						IF CONTAINS(Path.Name, '#') THEN
+							IF Length(TracedName)> 0  THEN
+								
+								SET TracedName = TracedName || ' | ' || SUBSTRING( Path.Name FROM 1 FOR (POSITION('#' IN  Path.Name) - 1)); 
+								SET LastTracedName = Path.Name;
+							ELSE 
+								SET TracedName = SUBSTRING( Path.Name FROM 1 FOR (POSITION('#' IN  Path.Name) - 1)); 
+								SET LastTracedName = Path.Name;
+							END IF;
+						ELSE
+							IF Length(TracedName)> 0 THEN
+							
+								SET TracedName = TracedName || ' | ' ||Path.Name; 
+								SET LastTracedName = Path.Name;
+							ELSE 
+								SET TracedName = Path.Name; 
+								SET LastTracedName = Path.Name;
+							END IF;
+						END IF;
+					END IF;
+				END IF;
+				IF Length(Path.Catalog) > 0 THEN
+					IF NOT (LastTracedCatalog= Path.Catalog) THEN
+						IF Length(TracedCatalog)> 0 THEN
+							SET TracedCatalog = TracedCatalog || ' | '|| Path.Catalog ;
+							SET LastTracedCatalog = Path.Catalog;
+						ELSE
+							SET TracedCatalog = Path.Catalog ;
+							SET LastTracedCatalog = Path.Catalog;
+						END IF;
+					END IF;
+				END IF;
+				IF Path.Severity > 0 THEN
+					IF NOT (LastTracedSeverity= Path.Severity) THEN
+						IF Length(TracedSeverity)> 0 THEN
+							SET TracedSeverity = TracedSeverity || ' | ' || CAST(Path.Severity AS CHAR) ;
+							SET LastTracedSeverity = Path.Severity;
+						ELSE 
+							SET TracedSeverity =  CAST(Path.Severity AS CHAR) ;
+							SET LastTracedSeverity = Path.Severity;
+						END IF;
+					END IF;
+				END IF;
+				IF Path.Number > 0 THEN
+					IF NOT (LastTracedNumber= Path.Number) THEN
+						SET TracedNumber = CAST(Path.Number AS CHARACTER) ;
+						SET LastTracedNumber = Path.Number;
+					END IF;
+				END IF;		
+				SET BIPMessage = TracedCatalog ||' | ' || TracedNumber;
+				
+				IF Length(Path.Label) > 0 THEN
+					IF NOT (LastTraceLocation = Path.Label) THEN
+						SET ErrorSource = SUBSTRING(Path.Label FROM (POSITION('.' IN Path.Label) + 1)) ;
+						SET LastTracedLocation = Path.Label;
+					END IF;
+				END IF;
+				IF Length(Path.Text) > 0 THEN
+					IF NOT (LastTracedText= Path.Text) THEN
+						
+						IF Length(Diagnostics)> 0 THEN
+							SET Diagnostics = Diagnostics || ' | '|| Path.Text ;
+							SET LastTracedText = Path.Text;							
+						ELSE 
+							SET Diagnostics = Path.Text ;
+							SET LastTracedText = Path.Text;
+						END IF;
+					END IF;
+				END IF;
+				MOVE Path Lastchild;
+				
+				DECLARE tempPath1 REFERENCE TO Path ;
+				DECLARE count, countPath INTEGER ;
+				DECLARE incrementer INTEGER 1;
+				
+				SET count = CARDINALITY(tempPath1.*[]) - 10;
+				IF count < 1 THEN 
+					IF Length(tempPath1.Text)> 0 THEN
+						SET DiagnosticText = DiagnosticText || ' | ' ||tempPath1.Text;
+					END IF;
+				END IF;
+				WHILE count > 1 DO
+					IF FIELDNAME(tempPath1.*[10+incrementer]) <> 'Insert' THEN
+						IF EXISTS(tempPath1.*[10+incrementer].Insert[]) THEN 
+							FOR Insert1 AS tempPath1.*[10+incrementer].Insert[] DO 
+								IF Length(Insert1.Text)> 0 THEN
+									SET DiagnosticText = DiagnosticText || ' | ' ||Insert1.Text;
+								END IF;
+							END FOR;
+						END IF;
+					ELSEIF FIELDNAME(tempPath1.*[10+incrementer]) = 'Insert' THEN
+						IF Length(tempPath1.*[10+incrementer].Text)> 0 THEN
+							SET DiagnosticText = DiagnosticText || ' | ' ||tempPath1.*[10+incrementer].Text;
+						END IF;
+					END IF;
+					SET incrementer = incrementer + 1;	
+					SET count = count -1 ;					
+				END WHILE;
+			END WHILE;
+
+			SET ErrorText = SPACE(16)|| 'NodeName:: ' || ErrorSource ||SPACE(16)|| 'Text:: ' || Diagnostics ||SPACE(16)||	'BIPMessage:: ' ||BIPMessage ||SPACE(16)||
+							'Detail:: ' || DiagnosticText ;
+			SET ErrorText = REPLACE(ErrorText,'<','{');
+			SET ErrorText = REPLACE(ErrorText,'>','}');
+			SET Width = Width + 1;
+			MOVE Path TO InputExceptionList.*[Width];
+		END WHILE;
+		SET BIPMessage 		 = SUBSTRING( BIPMessage FROM POSITION('|' IN  BIPMessage)+1);
+		SET EV.ErrorCode 	 = BIPMessage ;
+		SET EV.ErrorDesc 	 = LastTracedText ;
+		SET EV.SEVERITY 	 = LastTracedSeverity ;
+		SET EV.ErrorCategory = ErrorType;
+		SET EV.ErrorText 	 = ErrorText;
+		SET EV.DiagnosticText= DiagnosticText;
+	  IF(EV.ErrorCategory <> 'UserException')THEN
+		 SET EV.ERROR_TYPE = 'System error';
+	   ELSE
+	     SET EV.ERROR_TYPE = 'Application error';
+	  END IF;  
+		SET ExceptionMsg = ' ErrorText: '|| ErrorText ;
+		
+END;
+
+/* ----------------------------------------------------------
+	* Subroutine Name : updateFailureStatus()
+	* Description : Create Audit Message to emit FAIL of Event for
+					Full Membership Inquiry Request
+	* Author Name : Debajit Paul
+	* Date 	: 27th June, 2016
+	-----------------------------------------------------------*/
+	CREATE PROCEDURE updateFailureStatus(INOUT envVariables REFERENCE)
+	BEGIN
+		DECLARE key CHARACTER '' ;
+		DECLARE deleteCach BOOLEAN FALSE ;
+		IF EXISTS (envVariables.TransFileId[]) AND EXISTS(envVariables.TransSetId[]) THEN
+			SET key =	envVariables.TransFileId||'_'||envVariables.TransSetId;
+			CALL updateCache(CH_GlobalCacheMap,key,'FailureStatus=Y;')INTO deleteCach;
+		END IF;
+	END ;
+	END MODULE;

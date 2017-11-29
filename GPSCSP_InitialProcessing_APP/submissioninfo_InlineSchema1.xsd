@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema targetNamespace="http://eems.gateway.uhc.com/submissioninfo/" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://eems.gateway.uhc.com/submissioninfo/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:element ibmSchExtn:docRoot="true" name="submissionInfoRequest">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string"/>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+      <xsd:element ibmSchExtn:docRoot="true" name="submissionInfoResponse">
+    <xsd:complexType>
+      <xsd:simpleContent>
+        <xsd:extension base="xsd:string"/>
+      </xsd:simpleContent>
+    </xsd:complexType>
+  </xsd:element>
+    </xsd:schema>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:csv="http://www.ibm.com/dfdl/CommaSeparatedFormat"
+	xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions"
+	xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+
+	<xsd:import namespace="http://www.ibm.com/dfdl/CommaSeparatedFormat"
+		schemaLocation="../../IBMdefined/CommaSeparatedFormat.xsd" />
+	<xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format documentFinalTerminatorCanBeMissing="yes"
+				encoding="{$dfdl:encoding}" escapeSchemeRef="csv:CSVEscapeScheme"
+				ref="csv:CommaSeparatedFormat" />
+		</xsd:appinfo>
+	</xsd:annotation>
+
+
+	<xsd:element ibmSchExtn:docRoot="true" name="SourceInq">
+		<xsd:complexType>
+			<xsd:sequence dfdl:separator="">
+				<xsd:element dfdl:occursCountKind="implicit"
+					dfdl:terminator="%LF;" maxOccurs="unbounded" name="record">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separatorSuppressionPolicy="trailingEmpty">
+							<xsd:element name="SubscriberId" type="xsd:string" />
+							<xsd:element minOccurs="0" name="GroupId" type="xsd:string" />
+							<xsd:element minOccurs="0" name="ProvideId" type="xsd:string" />
+							<xsd:element minOccurs="0" name="IOrigEffDt" type="xsd:string" />
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+</xsd:schema>

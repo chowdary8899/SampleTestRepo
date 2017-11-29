@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:csv="http://www.ibm.com/dfdl/CommaSeparatedFormat" xmlns:dfdl="http://www.ogf.org/dfdl/dfdl-1.0/" xmlns:ibmDfdlExtn="http://www.ibm.com/dfdl/extensions" xmlns:ibmSchExtn="http://www.ibm.com/schema/extensions" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+
+    <xsd:import namespace="http://www.ibm.com/dfdl/CommaSeparatedFormat" schemaLocation="IBMdefined/CommaSeparatedFormat.xsd"/>
+    <xsd:annotation>
+		<xsd:appinfo source="http://www.ogf.org/dfdl/">
+			<dfdl:format documentFinalTerminatorCanBeMissing="yes" encoding="{$dfdl:encoding}" escapeSchemeRef="csv:CSVEscapeScheme" ref="csv:CommaSeparatedFormat"/>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+
+	<xsd:element ibmSchExtn:docRoot="true" name="TransactionSetResponse">
+		<xsd:complexType>
+			<xsd:sequence dfdl:separator="">
+				<xsd:element dfdl:occursCountKind="implicit" dfdl:terminator="" maxOccurs="unbounded" name="record">
+					<xsd:complexType>
+						<xsd:sequence dfdl:separator="" dfdl:separatorSuppressionPolicy="trailingEmpty">
+							<xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value1" name="field1" type="xsd:string"/>
+							<xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value2" name="field2" type="xsd:string"/>
+							<xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value3" name="field3" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value4" name="field4" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value5" name="field5" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value6" name="field6" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value7" name="field7" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&lt;/TransSetKey&gt;" ibmDfdlExtn:sampleValue="value8" maxOccurs="unbounded" name="field8" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&lt;/TransactionSetCreateResponse&gt;" ibmDfdlExtn:sampleValue="value9" name="field9" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&lt;/TransSetKeyList&gt;" ibmDfdlExtn:sampleValue="value10" name="field10" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value11" name="field11" type="xsd:string"/>
+                            <xsd:element dfdl:terminator="&gt;" ibmDfdlExtn:sampleValue="value12" name="field12" type="xsd:string"/>
+                        </xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>				
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+</xsd:schema>
